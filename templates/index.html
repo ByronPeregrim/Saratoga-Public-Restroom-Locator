@@ -7,6 +7,11 @@
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <style>
+
+        * {
+            font-family: Helvetica;
+        }
+
         #wrapper {
         	content: '';
         	position: absolute;
@@ -16,23 +21,32 @@
             background-size: auto 100%;
             background-position: center center;
         }
+
+        .location:hover {
+            background-color: rgba(107, 107, 107, 0.25);
+        }
     </style>
 </head>
 <body>
-    <nav class="navbar bg-white border w-100" style="position: fixed; z-index: 20; --bs-bg-opacity: .85">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">Saratoga Public Restrooms</a>
-        </div>
-    </nav>
     <div id="wrapper" class="d-flex flex-column">
-        <div id="content" class="w-75 align-self-center mb-5 shadow bg-light d-flex flex-column rounded" style="--bs-bg-opacity: .85; max-width: 900px; min-width: 300px; margin-top: 100px;">
+        <div id="content" class="align-self-center shadow bg-light d-flex flex-column rounded mt-5 mb-5" style="--bs-bg-opacity: .85; width: 90%; max-width: 900px; min-width: 300px;">
             <h1 class="text-center p-2 pt-4" style="font-size: 3rem;">Saratoga Public Restrooms</h1>
             <p class=" mb-2 p-4 pt-2 text-center lead">
                 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                 Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
             </p>
-            <div id="map" class="border rounded align-self-center bg-white" style="aspect-ratio: 1.25; width: 90%; min-width: 280px;">MAP</div>
-            <div id="location-list" class="border align-self-center mt-4 bg-white" style="width: 80%; aspect-ratio: .75; min-width: 280px;">LOCATION LIST</div>
+            <div id="map" class="border rounded align-self-center" style="aspect-ratio: 1; width: 85%; min-width: 280px; background-color: rgba(128, 128, 128, 0.25);">
+                <iframe src="https://www.google.com/maps/d/u/0/embed?mid=1XdxktqjDYi3U-dgB7ifp09WbMlJeAks&ehbc=2E312F" width="100%" height="100%"></iframe>
+            </div>
+            <div id="location-list" class="border align-self-center mt-5" style="width: 80%; aspect-ratio: .75; min-width: 280px; background-color: rgba(128, 128, 128, 0.25);">
+                {% for location in locations %}
+                    <div class="location border-bottom pt-3 pb-3" style="padding-left: 8px;">
+                        <h4><a href="/{{location['id']}}">{{location['title']}}</a></h4>
+                        <div><b>Address: </b>{{location['address']}}</div>
+                        <div><b>Rating: </b>{{location['rating']}}/5</div>
+                    </div>
+                {% endfor %}
+            </div>
             <div id="footer" class="mt-5 text-center">
                 <h2>Submit a new location...</h2>
                 <button type="button" class="mb-5 btn btn-primary">Go to Submit Page</button>
