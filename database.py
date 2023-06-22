@@ -1,9 +1,12 @@
-from sqlalchemy import create_engine, text
+import os
 
-db_connection_string = "mysql+pymysql://ntes6nmglk8xd0izmde6:pscale_pw_uOCa84U06Hz6KuUbo0YZPtMARnduiYyuUaY0wGVk7Et@aws.connect.psdb.cloud/saratoga-public-restrooms?charset=utf8mb4"
+from sqlalchemy import create_engine, text
+from dotenv import load_dotenv
+
+load_dotenv()
 
 engine = create_engine(
-    db_connection_string,
+    os.getenv("DB_CONNECTION_STRING"),
     connect_args={
         "ssl": {
             "ssl_cert": "/etc/ssl/cert.pem"
@@ -23,3 +26,17 @@ def load_locations_from_db():
         for row in result.all():
             jobs.append(dict(zip(column_names, row)))
         return jobs
+    
+def load_location_from_db(id):
+  with engine.connect() as conn:
+    result = conn.execute(
+       text(f"SELECT * FROM locations WHERE id={id}")
+      )
+    rows = []
+    for row in result.all():
+      rows.append(row._mapping)
+    if len(rows) == 0:
+      return None
+    else:
+      return row
+
