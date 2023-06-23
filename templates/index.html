@@ -8,16 +8,20 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <style>
 
+            html {
+                background-color: rgb(200,200,200);
+            }
+
         * {
             font-family: Helvetica;
             color: rgb(30, 30, 30);
         }
 
         #wrapper {
-        	content: '';
-        	position: absolute;
-        	width: 100%;
-        	background-image: linear-gradient(to bottom, white, rgba(245, 245, 245, 0)), url(static/background.jpg);
+            content: '';
+            position: absolute;
+            width: 100%;
+            background-image: linear-gradient(to bottom, whitesmoke, rgba(200, 200, 200, 0)), url(/static/background.jpg);
             background-repeat: no-repeat;
             background-size: auto 100%;
             background-position: center center;
@@ -32,8 +36,8 @@
     </style>
 </head>
 <body>
-    <div id="wrapper" class="d-flex flex-column">
-        <div id="content" class="align-self-center shadow bg-light d-flex flex-column rounded mt-5 mb-5" style="--bs-bg-opacity: .85; width: 90%; max-width: 900px; min-width: 300px;">
+    <div id="wrapper" class="d-flex flex-column align-items-center">
+        <div id="content" class="shadow bg-light d-flex flex-column rounded mt-5 mb-5" style="--bs-bg-opacity: .85; width: 90%; max-width: 900px; min-width: 300px;">
             <h1 class="text-center p-2 pt-4" style="font-size: 3rem;">Saratoga Public Restrooms</h1>
             <p class=" mb-2 p-4 pt-2 text-center lead">
                 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
@@ -54,10 +58,10 @@
             </div>
             <div id="footer" class="mt-5 text-center border-top pt-5">
                 <h2>Submit a new location...</h2>
-                <button type="button" class="mb-5 btn btn-primary">Go to Submit Page</button>
+                <a href="/location-form" class="mb-5 btn btn-primary">Go to Submit Page</a>
             </div>
         </div>
-        <p id="copyright" class="text-start mb-0" style="font-size: 10px;">Peregrim Web Design</p>
+        <p id="copyright" class="text-start mb-0" style="font-size: 10px;">Copyright 2023, BSP Design</p>
     </div>
 </body>
 </html>

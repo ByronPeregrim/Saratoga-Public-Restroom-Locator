@@ -22,5 +22,9 @@ def show_location(id):
     return render_template('locationpage.html',
                            location=location)
 
+@app.route("/location-form")
+def submit_location():
+    return render_template('location-form.html')
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)
