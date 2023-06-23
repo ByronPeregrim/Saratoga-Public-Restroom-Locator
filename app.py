@@ -1,5 +1,5 @@
-from flask import Flask, render_template, jsonify
-from database import load_locations_from_db, load_location_from_db
+from flask import Flask, render_template, jsonify, request
+from database import load_locations_from_db, load_location_from_db, add_location_to_db
 
 app = Flask(__name__)
         
@@ -23,8 +23,16 @@ def show_location(id):
                            location=location)
 
 @app.route("/location-form")
-def submit_location():
+def render_location():
     return render_template('location-form.html')
+
+@app.route("/location-form/submit", methods=['post'])
+def submit_form():
+    data = request.form
+    add_location_to_db(data)
+    return render_template('location_submitted.html',
+                           data = data)
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)

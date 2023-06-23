@@ -40,3 +40,13 @@ def load_location_from_db(id):
     else:
       return row
 
+def add_location_to_db(data):
+   row = {
+      "location_name": data["location_name"],
+      "address": data["address"],
+      "open_hours": data["open_hours"],
+      "additional_info": data["additional_info"]
+   }
+   with engine.connect() as conn:
+      query = text("INSERT INTO newLocations (location_name, address, open_hours, additional_info) VALUES (:location_name, :address, :open_hours, :additional_info)")
+      conn.execute(query, row)
