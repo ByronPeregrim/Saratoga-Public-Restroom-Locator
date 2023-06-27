@@ -2,6 +2,7 @@ import os
 
 from sqlalchemy import create_engine, text
 from dotenv import load_dotenv
+from datetime import date
 
 load_dotenv()
 
@@ -22,11 +23,21 @@ def load_locations_from_db():
     with engine.connect() as conn:
         result = conn.execute(text("select * from locations"))
         column_names = result.keys()
-        jobs = []
+        locations = []
         for row in result.all():
-            jobs.append(dict(zip(column_names, row)))
-        return jobs
-    
+            locations.append(dict(zip(column_names, row)))
+        return locations
+
+def load_comments_from_db():
+   with engine.connect() as conn:
+      result = conn.execute(text("select * from comments"))
+      column_names = result.keys()
+      comments = []
+      for row in result.all():
+         comments.append(dict(zip(column_names, row)))
+      return comments
+
+
 def load_location_from_db(id):
   with engine.connect() as conn:
     result = conn.execute(
@@ -49,4 +60,16 @@ def add_location_to_db(data):
    }
    with engine.connect() as conn:
       query = text("INSERT INTO newLocations (location_name, address, open_hours, additional_info) VALUES (:location_name, :address, :open_hours, :additional_info)")
+      conn.execute(query, row)
+
+def add_comment_to_db(location_id, data):
+   row = {
+      "location_id": location_id,
+      "user_name": data["user_name"],
+      "post_date": date,
+      "rating": data["rating"],
+      "user_comment": data["comment"]
+   }
+   with engine.connect() as conn:
+      query = text("INSERT INTO comments (location_id, user_name, post_date, rating, user_comment) VALUES (:location_id, :user_name, curdate(), :rating, :user_comment)")
       conn.execute(query, row)

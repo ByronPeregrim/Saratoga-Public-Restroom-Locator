@@ -1,5 +1,5 @@
 from flask import Flask, render_template, jsonify, request
-from database import load_locations_from_db, load_location_from_db, add_location_to_db
+from database import load_locations_from_db, load_location_from_db, add_location_to_db, add_comment_to_db, load_comments_from_db
 
 app = Flask(__name__)
         
@@ -17,10 +17,18 @@ def list_locations():
 @app.route("/location/<id>")
 def show_location(id):
     location = load_location_from_db(id)
+    comments = load_comments_from_db()
     if not location:
         return "Not Found", 404
     return render_template('locationpage.html',
-                           location=location)
+                           location=location,
+                           comments=comments)
+
+@app.route("/location/<id>/comment-submit", methods=['post'])
+def submit_comment(id):
+    data = request.form
+    add_comment_to_db(id, data)
+    return render_template('submitted.html')
 
 @app.route("/location-form")
 def render_location():
@@ -30,9 +38,7 @@ def render_location():
 def submit_form():
     data = request.form
     add_location_to_db(data)
-    return render_template('location_submitted.html',
-                           data = data)
-
+    return render_template('submitted.html')
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)
