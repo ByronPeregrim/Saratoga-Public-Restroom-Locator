@@ -45,7 +45,13 @@
             </div>
             <h1 class="text-center p-2 mt-3" style="font-size: 3rem;">{{location['title']}}</h1>
             <h3 class="text-center">{{location['location']}}</h3>
-            <h3><b>Rating:</b> {{location['rating']}}</h3>
+            <h3><b>Rating:</b>
+                {% if location['rating'] != None %}
+                    {{location['rating']}}/5
+                {% else %}
+                    {{location['rating']}}
+                {% endif %}
+            </h3>
             <h2 class="mt-5 border-bottom">Comments</h2>
             <div id="comments" class="mt-3 mb-5" style="width: 80%;">
                 {% for comment in comments %}

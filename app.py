@@ -1,5 +1,5 @@
 from flask import Flask, render_template, jsonify, request
-from database import load_locations_from_db, load_location_from_db, add_location_to_db, add_comment_to_db, load_comments_from_db
+from database import load_locations_from_db, load_location_from_db, add_location_to_db, add_comment_to_db, load_comments_from_db, get_location_rating, update_rating_in_db
 
 app = Flask(__name__)
         
@@ -28,6 +28,9 @@ def show_location(id):
 def submit_comment(id):
     data = request.form
     add_comment_to_db(id, data)
+    rating = get_location_rating(id)
+    if rating != None:
+        update_rating_in_db(id, rating)
     return render_template('submitted.html')
 
 @app.route("/location-form")

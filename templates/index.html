@@ -43,16 +43,23 @@
                 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                 Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
             </p>
-            <div id="map" class="border rounded align-self-center" style="aspect-ratio: 1; width: 85%; min-width: 300px; max-width: 700px; background-color: rgba(128, 128, 128, 0.25);">
+            <div id="map" class="border rounded align-self-center shadow" style="aspect-ratio: 1; width: 85%; min-width: 300px; max-width: 700px; background-color: rgba(128, 128, 128, 0.25);">
                 <iframe src="https://www.google.com/maps/d/u/0/embed?mid=1XdxktqjDYi3U-dgB7ifp09WbMlJeAks&ehbc=2E312F" width="100%" height="100%"></iframe>
             </div>
-            <div id="location-list" class="border align-self-center mt-5 pb-4" style="width: auto; min-width: 280px; background-color: rgba(128, 128, 128, 0.25); padding: 0px 20px;">
+            <div id="location-list" class="border align-self-center mt-5 pb-4 shadow" style="width: auto; min-width: 280px; background-color: rgba(128, 128, 128, 0.25); padding: 0px 20px;">
                 {% for location in locations %}
                     <a href="/location/{{location['id']}}" id="locations" style="padding-left: 8px; text-decoration: none; color: rgb(30, 30, 30);">
                         <h4>{{location['title']}}</h4>
                         <div><b>Address: </b>{{location['location']}}</div>
                         <div><b>Hours: </b>{{location['hours']}}</div>
-                        <div class="border-bottom pb-4"><b>Rating: </b>{{location['rating']}}</div>
+                        <div class="border-bottom pb-4"><b>Rating: </b>
+                            {% if location['rating'] != None %}
+                                {{location['rating']}}/5
+                            {% else %}
+                                {{location['rating']}}
+                            {% endif %}
+
+                        </div>
                     </a>
                 {% endfor %}
             </div>

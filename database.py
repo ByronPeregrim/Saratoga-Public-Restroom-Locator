@@ -73,3 +73,29 @@ def add_comment_to_db(location_id, data):
    with engine.connect() as conn:
       query = text("INSERT INTO comments (location_id, user_name, post_date, rating, user_comment) VALUES (:location_id, :user_name, curdate(), :rating, :user_comment)")
       conn.execute(query, row)
+
+
+def get_location_rating(id):
+   with engine.connect() as conn:
+    result = conn.execute(
+       text(f"SELECT rating FROM comments WHERE location_id={id}")
+      )
+    rows = []
+    for row in result.all():
+      rows.append(row.rating)
+    if len(rows) == 0:
+      return None
+    else:
+      return average_rows(rows)
+    
+def average_rows(rows):
+   x = 0
+   for row in rows:
+      x += row
+   average = x / len(rows)
+   return average
+
+def update_rating_in_db(id, rating):
+   with engine.connect() as conn:
+      query = text(f" UPDATE locations SET rating = {rating} WHERE id={id}")
+      conn.execute(query)
