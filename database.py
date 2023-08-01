@@ -37,7 +37,6 @@ def load_comments_from_db():
          comments.append(dict(zip(column_names, row)))
       return comments
 
-
 def load_location_from_db(id):
   with engine.connect() as conn:
     result = conn.execute(
@@ -73,7 +72,6 @@ def add_comment_to_db(location_id, data):
    with engine.connect() as conn:
       query = text("INSERT INTO comments (location_id, user_name, post_date, rating, user_comment) VALUES (:location_id, :user_name, curdate(), :rating, :user_comment)")
       conn.execute(query, row)
-
 
 def get_location_rating(id):
    with engine.connect() as conn:
