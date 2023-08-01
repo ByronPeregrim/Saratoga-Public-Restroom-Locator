@@ -7,7 +7,7 @@ from datetime import date
 load_dotenv()
 
 engine = create_engine(
-    DB_CONNECTION_STRING,
+    os.getenv("DB_CONNECTION_STRING"),
     connect_args={
         "ssl": {
             "ssl_cert": "/etc/ssl/cert.pem"
