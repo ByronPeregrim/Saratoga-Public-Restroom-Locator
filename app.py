@@ -20,6 +20,9 @@ def show_location(id):
     comments = load_comments_from_db()
     if not location:
         return "Not Found", 404
+    rating = get_location_rating(id)
+    if rating != None:
+        update_rating_in_db(id, rating)
     return render_template('locationpage.html',
                            location=location,
                            comments=comments)
